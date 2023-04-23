@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import echarts from 'echarts'
+import * as echarts from 'echarts'
 
 @Component
 export default class ChartLine extends Vue {
