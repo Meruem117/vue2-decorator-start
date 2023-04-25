@@ -177,15 +177,3 @@ export default class ChartLine extends Vue {
     }
 }
 </script>
-
-<style lang="less" scoped>
-.container {
-    width: 100%;
-    height: 160px;
-
-    .chart {
-        width: 100%;
-        height: 100%;
-    }
-}
-</style>
