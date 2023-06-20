@@ -33,11 +33,12 @@ export default class HomeView extends Vue {
 .page {
     width: 100%;
     min-height: 100vh;
+    padding: 24px 16px;
     text-align: center;
-    background-color: #e7e9fa;
+    background-color: #fff;
 
     .chart {
-        width: 100%;
+        width: calc(100% - 32px);
         height: 160px;
     }
 }
