@@ -1,7 +1,7 @@
 <template>
     <div class="page">
-        <div class="chart">
-            <ChartLine code="line" :data="lineData" showLegend ref="chartLine" />
+        <div class="inner">
+            <ChartLine code="line" :data="lineData" :cate="lineCate" showLegend ref="chartLine" />
         </div>
     </div>
 </template>
@@ -20,12 +20,12 @@ export default class HomeView extends Vue {
     lineData: Chart.LineDataItem[] = [
         {
             type: '',
-            name: ['周一', '周二', '周三'],
             value: [100, 300, 200],
-            color: '#fdc865',
-            colorRgb: '252, 201, 103'
+            color: '#6293ff',
+            colorRgb: '99, 148, 255'
         }
     ]
+    lineCate: string[] = ['Mon', 'Tue', 'Wen']
 
     @Ref('chartLine') readonly chartLine!: ChartLine
 
@@ -37,15 +37,20 @@ export default class HomeView extends Vue {
 
 <style lang="less" scoped>
 .page {
-    width: 100%;
-    min-height: 100vh;
-    padding: 24px 16px;
-    text-align: center;
-    background-color: #fff;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #f2f3f4;
 
-    .chart {
-        width: calc(100% - 32px);
-        height: 160px;
+    .inner {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        background-color: #f2f3f4;
+        overflow: auto;
     }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="chart" :id="chartId"></div>
+        <div class="chart" :id="chartId" :style="computedStyle"></div>
     </div>
 </template>
 
@@ -23,6 +23,12 @@ export default class ChartLine extends Vue {
     data!: Chart.LineDataItem[]
 
     @Prop({
+        default: () => [],
+        required: false
+    })
+    cate!: string[]
+
+    @Prop({
         default: false,
         required: false
     })
@@ -35,6 +41,12 @@ export default class ChartLine extends Vue {
     get legendConfig() {
         return {
             show: this.showLegend
+        }
+    }
+
+    get computedStyle() {
+        return {
+
         }
     }
 
@@ -54,21 +66,20 @@ export default class ChartLine extends Vue {
 
     drawChart() {
         this.chart = echarts.init(document.getElementById(this.chartId)!)
-        let option = this.getLineOption(this.data, this.legendConfig)
+        let option = this.getLineOption(this.data, this.cate, this.legendConfig)
         this.chart.setOption(option, true)
         this.handleResize()
     }
 
-    getLineOption(list: Chart.LineDataItem[], legendConfig: { show: boolean }) {
+    getLineOption(data: Chart.LineDataItem[], cate: string[], legendConfig: typeof this.legendConfig) {
         let series: any[] = []
-        let typeArr: string[] = [], colorArr: string[] = [], nameArr: string[] = []
-        list.forEach(item => {
+        let typeArr: string[] = [], colorArr: string[] = []
+        data.forEach(item => {
             typeArr.push(item.type)
             colorArr.push(item.color)
-            nameArr = item.name
             series.push({
-                name: item.type,
                 type: 'line',
+                name: item.type,
                 showSymbol: false,
                 lineStyle: {
                     normal: {
@@ -78,8 +89,8 @@ export default class ChartLine extends Vue {
                 areaStyle: {
                     normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                            { offset: 0, color: `rgba(${item.colorRgb},0.5)` },
-                            { offset: 1, color: `rgba(${item.colorRgb},0)` },
+                            { offset: 0, color: `rgba(${item.colorRgb}, 0.5)` },
+                            { offset: 1, color: `rgba(${item.colorRgb}, 0)` },
                         ], false),
                     },
                 },
@@ -93,7 +104,7 @@ export default class ChartLine extends Vue {
             },
             grid: {
                 top: legendConfig.show ? '22%' : '12%',
-                left: '0',
+                left: '5%',
                 right: '5%',
                 bottom: '0',
                 containLabel: true
@@ -101,7 +112,7 @@ export default class ChartLine extends Vue {
             legend: {
                 show: legendConfig.show,
                 top: '5%',
-                right: '4%',
+                right: '5%',
                 icon: 'rect',
                 itemWidth: 13,
                 itemHeight: 13,
@@ -135,7 +146,7 @@ export default class ChartLine extends Vue {
                         }
                     },
                     boundaryGap: false,
-                    data: nameArr
+                    data: cate
                 },
             ],
             yAxis: [
