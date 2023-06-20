@@ -18,7 +18,13 @@ import ChartLine from '@/components/ChartLine.vue'
 
 export default class HomeView extends Vue {
     lineData: Chart.LineDataItem[] = [
-        { type: '', name: ['周一', '周二', '周三'], value: [100, 300, 200], color: '#fdc865', colorRgb: '252, 201, 103' }
+        {
+            type: '',
+            name: ['周一', '周二', '周三'],
+            value: [100, 300, 200],
+            color: '#fdc865',
+            colorRgb: '252, 201, 103'
+        }
     ]
 
     @Ref('chartLine') readonly chartLine!: ChartLine

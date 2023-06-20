@@ -56,6 +56,7 @@ export default class ChartLine extends Vue {
         this.chart = echarts.init(document.getElementById(this.chartId)!)
         let option = this.getLineOption(this.data, this.legendConfig)
         this.chart.setOption(option, true)
+        this.handleResize()
     }
 
     getLineOption(list: Chart.LineDataItem[], legendConfig: { show: boolean }) {
