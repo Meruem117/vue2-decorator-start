@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div class="chart" :id="chartId" :style="computedStyle"></div>
+    <div class="container" :style="computedStyle">
+        <div class="chart" :id="chartId"></div>
     </div>
 </template>
 
@@ -15,6 +15,12 @@ export default class ChartLine extends Vue {
         required: false
     })
     code!: string
+
+    @Prop({
+        default: '160px',
+        required: false
+    })
+    height!: string
 
     @Prop({
         default: () => [],
@@ -46,7 +52,7 @@ export default class ChartLine extends Vue {
 
     get computedStyle() {
         return {
-
+            height: this.height
         }
     }
 
