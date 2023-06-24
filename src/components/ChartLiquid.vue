@@ -7,6 +7,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import * as echarts from 'echarts'
+import 'echarts-liquidfill'
 
 @Component
 export default class ChartLine extends Vue {
@@ -24,7 +25,7 @@ export default class ChartLine extends Vue {
 
     @Prop({
         default: 'number',
-        required: true
+        required: false
     })
     type!: string
 
@@ -87,34 +88,11 @@ export default class ChartLine extends Vue {
     }
 
     getOption(value: number, title: string, config: typeof this.config) {
+        let rate = value * 10000 / 100 + '%'
         let data = [value, value, value]
-        let dataArr: any[] = []
-        for (var i = 0; i < 8; i++) {
-            if (i % 2 === 0) {
-                dataArr.push({
-                    name: (i + 1).toString(),
-                    value: 50,
-                    itemStyle: {
-                        normal: {
-                            color: config.color,
-                        },
-                    },
-                })
-            } else {
-                dataArr.push({
-                    name: (i + 1).toString(),
-                    value: 20,
-                    itemStyle: {
-                        normal: {
-                            color: config.bgColor,
-                        },
-                    },
-                })
-            }
-        }
         let option = {
             title: {
-                text: value * 10000 / 100 + '%',
+                text: rate,
                 textStyle: {
                     color: '#fff',
                     fontSize: 21,
@@ -134,14 +112,14 @@ export default class ChartLine extends Vue {
                     children: [
                         {
                             type: 'text',
-                            z: 100,
-                            left: '10',
                             top: 'middle',
+                            left: 'middle',
                             style: {
                                 text: title,
                                 fill: '#fff',
                                 font: '14px Microsoft YaHei',
                             },
+                            z: 100,
                         },
                     ],
                 },
@@ -185,46 +163,6 @@ export default class ChartLine extends Vue {
                             formatter: '',
                         },
                     },
-                },
-                {
-                    type: 'pie',
-                    zlevel: 0,
-                    silent: true,
-                    center: ['50%', '50%'],
-                    radius: ['85%', '90%'],
-                    hoverAnimation: false,
-                    color: config.bgColor,
-                    label: {
-                        normal: {
-                            show: false,
-                        },
-                    },
-                    labelLine: {
-                        normal: {
-                            show: false,
-                        },
-                    },
-                    data: [1],
-                },
-                {
-                    type: 'pie',
-                    zlevel: 10,
-                    silent: true,
-                    center: ['50%', '50%'],
-                    radius: ['85%', '90%'],
-                    startAngle: 50,
-                    hoverAnimation: false,
-                    label: {
-                        normal: {
-                            show: false,
-                        },
-                    },
-                    labelLine: {
-                        normal: {
-                            show: false,
-                        },
-                    },
-                    data: dataArr,
                 },
             ],
         }

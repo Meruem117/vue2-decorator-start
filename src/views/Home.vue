@@ -3,7 +3,7 @@
         <div class="inner">
             <ChartLine code="line" :data="lineData" :cate="comCate" ref="chartLine" />
             <ChartBar code="bar" :data="barData" :cate="comCate" :showLegend="true" ref="chartBar" />
-            <ChartLiquid code="liquid" ref="ChartLiquid" />
+            <ChartLiquid code="liquid" :value="liquidData" title="Total" ref="chartLiquid" />
         </div>
     </div>
 </template>
