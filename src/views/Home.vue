@@ -3,6 +3,7 @@
         <div class="inner">
             <ChartLine code="line" :data="lineData" :cate="comCate" ref="chartLine" />
             <ChartBar code="bar" :data="barData" :cate="comCate" :showLegend="true" ref="chartBar" />
+            <ChartLiquid code="liquid" ref="ChartLiquid" />
         </div>
     </div>
 </template>
@@ -11,11 +12,13 @@
 import { Vue, Component, Ref } from 'vue-property-decorator'
 import ChartLine from '@/components/ChartLine.vue'
 import ChartBar from '@/components/ChartBar.vue'
+import ChartLiquid from '@/components/ChartLiquid.vue'
 
 @Component({
     components: {
         ChartLine,
-        ChartBar
+        ChartBar,
+        ChartLiquid,
     },
 })
 
@@ -43,13 +46,16 @@ export default class HomeView extends Vue {
             endColor: '#07c160'
         }
     ]
+    liquidData: string = '85.5%'
 
     @Ref('chartLine') readonly chartLine!: ChartLine
     @Ref('chartBar') readonly chartBar!: ChartBar
+    @Ref('chartLiquid') readonly chartLiquid!: ChartLiquid
 
     private mounted() {
         this.chartLine!.init()
         this.chartBar!.init()
+        this.chartLiquid!.init()
     }
 }
 </script>
