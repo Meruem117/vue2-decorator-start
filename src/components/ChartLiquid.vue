@@ -8,37 +8,25 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import * as echarts from 'echarts'
 
-type colorConfig = {
-    color: string,
-    bgColor: string,
-    topColor: string,
-}
-
 @Component
 export default class ChartLine extends Vue {
     @Prop({
         default: '',
-        required: false
+        required: true
     })
     code!: string
 
     @Prop({
         default: 0,
-        required: false
+        required: true
     })
     value!: number | string
 
     @Prop({
-        default: '0%',
-        required: false
+        default: 'number',
+        required: true
     })
-    rate!: string
-
-    @Prop({
-        default: '',
-        required: false
-    })
-    text!: string
+    type!: string
 
     @Prop({
         default: '',
@@ -68,7 +56,7 @@ export default class ChartLine extends Vue {
         return 'chart-liquid-' + this.code
     }
 
-    get colorConfig() {
+    get config() {
         return {
             color: this.color,
             bgColor: this.bgColor,
@@ -92,15 +80,15 @@ export default class ChartLine extends Vue {
 
     drawChart() {
         this.chart = echarts.init(document.getElementById(this.chartId)!)
-        let value = this.rate ? (parseInt(this.rate.replace('%', '')) * 100 / 10000) : 0
-        let option = this.getLiquidOption(value, this.title, this.colorConfig)
+        let value = this.value ? (parseInt(this.value.toString().replace('%', '')) * 100 / 10000) : 0
+        let option = this.getOption(value, this.title, this.config)
         this.chart.setOption(option, true)
+        this.handleResize()
     }
 
-    getLiquidOption(value: number, title: string, colorConfig: colorConfig) {
+    getOption(value: number, title: string, config: typeof this.config) {
         let data = [value, value, value]
         let dataArr: any[] = []
-        let { color, bgColor, topColor } = colorConfig
         for (var i = 0; i < 8; i++) {
             if (i % 2 === 0) {
                 dataArr.push({
@@ -108,7 +96,7 @@ export default class ChartLine extends Vue {
                     value: 50,
                     itemStyle: {
                         normal: {
-                            color: color,
+                            color: config.color,
                         },
                     },
                 })
@@ -118,7 +106,7 @@ export default class ChartLine extends Vue {
                     value: 20,
                     itemStyle: {
                         normal: {
-                            color: bgColor,
+                            color: config.bgColor,
                         },
                     },
                 })
@@ -166,15 +154,15 @@ export default class ChartLine extends Vue {
                     data: data,
                     period: 1000,
                     backgroundStyle: {
-                        color: bgColor,
+                        color: config.bgColor,
                     },
                     outline: {
                         borderDistance: 0,
                         itemStyle: {
                             borderWidth: 4,
-                            borderColor: 'rgba(' + topColor + ', .4)',
+                            borderColor: 'rgba(' + config.topColor + ', .4)',
                             shadowBlur: 2,
-                            shadowColor: bgColor,
+                            shadowColor: config.bgColor,
                         },
                     },
                     color: [
@@ -185,9 +173,9 @@ export default class ChartLine extends Vue {
                             x2: 0,
                             y2: 1,
                             colorStops: [
-                                { offset: 1, color: color },
-                                { offset: 0.5, color: 'rgba(' + topColor + ', .6)' },
-                                { offset: 0, color: 'rgba(' + topColor + ', .3)' },
+                                { offset: 1, color: config.color },
+                                { offset: 0.5, color: 'rgba(' + config.topColor + ', .6)' },
+                                { offset: 0, color: 'rgba(' + config.topColor + ', .3)' },
                             ],
                             globalCoord: false,
                         },
@@ -205,7 +193,7 @@ export default class ChartLine extends Vue {
                     center: ['50%', '50%'],
                     radius: ['85%', '90%'],
                     hoverAnimation: false,
-                    color: bgColor,
+                    color: config.bgColor,
                     label: {
                         normal: {
                             show: false,
