@@ -4,6 +4,7 @@
             <ChartLine code="line" :data="lineData" :cate="comCate" ref="chartLine" />
             <ChartBar code="bar" :data="barData" :cate="comCate" :showLegend="true" ref="chartBar" />
             <ChartLiquid code="liquid" :value="liquidData" title="Total" ref="chartLiquid" />
+            <ChartPie code="pie" ref="chartPie" />
         </div>
     </div>
 </template>
@@ -13,12 +14,14 @@ import { Vue, Component, Ref } from 'vue-property-decorator'
 import ChartLine from '@/components/ChartLine.vue'
 import ChartBar from '@/components/ChartBar.vue'
 import ChartLiquid from '@/components/ChartLiquid.vue'
+import ChartPie from '@/components/ChartPie.vue'
 
 @Component({
     components: {
         ChartLine,
         ChartBar,
         ChartLiquid,
+        ChartPie,
     },
 })
 
@@ -51,11 +54,13 @@ export default class HomeView extends Vue {
     @Ref('chartLine') readonly chartLine!: ChartLine
     @Ref('chartBar') readonly chartBar!: ChartBar
     @Ref('chartLiquid') readonly chartLiquid!: ChartLiquid
+    @Ref('chartPie') readonly chartPie!: ChartPie
 
     private mounted() {
         this.chartLine!.init()
         this.chartBar!.init()
         this.chartLiquid!.init()
+        this.chartPie!.init()
     }
 }
 </script>
