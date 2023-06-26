@@ -13,4 +13,9 @@ declare namespace Chart {
         startColor: string,
         endColor: string,
     }
+    type PieDataItem = {
+        name: string,
+        value?: number,
+        rate?: string
+    }
 }
