@@ -4,7 +4,7 @@
             <ChartLine code="line" :data="lineData" :cate="comCate" ref="chartLine" />
             <ChartBar code="bar" :data="barData" :cate="comCate" :showLegend="true" ref="chartBar" />
             <ChartLiquid code="liquid" :value="liquidData" title="Total" ref="chartLiquid" />
-            <ChartPie code="pie" ref="chartPie" />
+            <ChartPie code="pie" :data="pieData" ref="chartPie" />
         </div>
     </div>
 </template>
@@ -50,6 +50,11 @@ export default class HomeView extends Vue {
         }
     ]
     liquidData: string = '85.5%'
+    pieData: Chart.PieDataItem[] = [
+        { name: 'Mon', value: 110 },
+        { name: 'Tue', value: 120 },
+        { name: 'Wen', value: 130 },
+    ]
 
     @Ref('chartLine') readonly chartLine!: ChartLine
     @Ref('chartBar') readonly chartBar!: ChartBar
