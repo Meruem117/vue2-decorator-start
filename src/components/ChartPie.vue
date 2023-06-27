@@ -48,12 +48,12 @@ export default class ChartLine extends Vue {
 
     drawChart() {
         this.chart = echarts.init(document.getElementById(this.chartId)!)
-        let option = this.getOption(this.data)
+        let option = this.getOption(this.data, this.config)
         this.chart.setOption(option, true)
         this.handleResize()
     }
 
-    getOption(data: Chart.PieDataItem[]) {
+    getOption(data: Chart.PieDataItem[], config: typeof this.config) {
         let colorList = ['#518dff', '#00e2f0', '#08d066', '#ffd200', '#ffa800', '#ff6271', '#ffb271', '#ffc271']
         let dataOuter: any[] = [], dataInner: any[] = [], total = 0
         data.forEach((item, index) => {
